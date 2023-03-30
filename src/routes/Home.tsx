@@ -1,6 +1,7 @@
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegHeart } from "react-icons/fa";
 import {
   Box,
+  Button,
   Grid,
   Heading,
   HStack,
@@ -8,41 +9,30 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import Room from "../components/Room";
 
 export default function Home() {
   return (
     <Grid
       mt={10}
-      px={40}
+      px={{
+        base: 10,
+        lg: 40,
+      }}
       columnGap={4}
       rowGap={8}
-      templateColumns={"repeat(5, 1fr)"}
+      // base는 스마트폰 사용자를 위해 만들어짐
+      templateColumns={{
+        sm: "1fr",
+        md: "1fr 1fr",
+        lg: "repeat(3, 1fr)",
+        xl: "repeat(4, 1fr)",
+        "2xl": "repeat(5, 1fr)",
+      }}
     >
-      <VStack alignItems={"flex-start"}>
-        <Box overflow={"hidden"} mb={"3"} rounded={"3xl"}>
-          <Image
-            h="280"
-            src="https://a0.muscache.com/im/pictures/5b6242a9-8832-432b-ac79-38de2a3d0b0d.jpg?im_w=720"
-          />
-        </Box>
-        <Box>
-          <Grid gap={2} templateColumns={"6fr 1fr"}>
-            <Text as={"b"} noOfLines={1} fontSize={"md"}>
-              Niseko, Abuta District, 일본
-            </Text>
-            <HStack spacing={1}>
-              <FaStar size={15} />
-              <Text>5.0</Text>
-            </HStack>
-          </Grid>
-          <Text fontSize={"sm"} color="gray.600">
-            Seoul, S. Korea
-          </Text>
-        </Box>
-        <Text fontSize={"sm"} color="gray.600">
-          <Text as={"b"}>$72</Text>/ night
-        </Text>
-      </VStack>
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1].map((index) => (
+        <Room key={index} />
+      ))}
     </Grid>
   );
 }

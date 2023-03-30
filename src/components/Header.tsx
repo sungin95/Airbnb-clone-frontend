@@ -4,11 +4,13 @@ import {
   HStack,
   IconButton,
   LightMode,
+  Stack,
   useColorMode,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 
@@ -28,14 +30,25 @@ export default function Header() {
   // 컴포넌트는 반드시 대문자 시작
   const Icon = useColorModeValue(FaMoon, FaSun);
   return (
-    <HStack
+    <Stack
       justifyContent={"space-between"}
+      alignItems="center"
       py={5}
       px={40}
+      direction={{
+        sm: "column",
+        md: "row",
+      }}
+      spacing={{
+        sm: 3,
+        md: 0,
+      }}
       borderBottomWidth={1}
     >
       <Box color={logoColor}>
-        <FaAirbnb size={"38"} />
+        <Link to={"/"}>
+          <FaAirbnb size={"48"} />
+        </Link>
       </Box>
       <HStack spacing={2}>
         <IconButton
@@ -55,6 +68,6 @@ export default function Header() {
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-    </HStack>
+    </Stack>
   );
 }
