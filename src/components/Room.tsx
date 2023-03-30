@@ -34,9 +34,9 @@ export default function Room() {
           <Text as={"b"} noOfLines={1} fontSize={"md"}>
             Niseko, Abuta District, 일본
           </Text>
-          <HStack spacing={1}>
-            <FaStar size={15} />
-            <Text>5.0</Text>
+          <HStack _hover={{ color: "red.100" }} spacing={1} alignItems="center">
+            <FaStar size={12} />
+            <Text fontSize={"sm"}>5.0</Text>
           </HStack>
         </Grid>
         <Text fontSize={"sm"} color={gray}>
