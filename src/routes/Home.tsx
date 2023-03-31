@@ -61,6 +61,8 @@ export default function Home() {
       <Link to="/asdasd">404</Link>
       {data?.map((room) => (
         <Room
+          key={room.pk}
+          pk={room.pk}
           imageUrl={room.photos[0].file}
           name={room.name}
           rating={room.rating}
