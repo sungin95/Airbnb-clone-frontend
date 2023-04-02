@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Room from "../components/Room";
 import RoomSkeleton from "../components/RoomSkeleton";
 import { getRooms } from "./api";
+import { IRoomList } from "../types";
 
 interface IPhoto {
   pk: string;
@@ -11,19 +12,8 @@ interface IPhoto {
   description: string;
 }
 
-interface IRoom {
-  pk: number;
-  name: string;
-  country: string;
-  city: string;
-  price: number;
-  rating: number;
-  is_owner: boolean;
-  photos: IPhoto[];
-}
-
 export default function Home() {
-  const { isLoading, data } = useQuery<IRoom[]>(["rooms"], getRooms);
+  const { isLoading, data } = useQuery<IRoomList[]>(["rooms"], getRooms);
   return (
     <Grid
       mt={10}
