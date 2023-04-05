@@ -1,3 +1,4 @@
+import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import {
   Avatar,
   Box,
@@ -15,12 +16,12 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import useUser from "../lib/useUser";
 import { logOut } from "../routes/api";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Header() {
   const { userLoading, isLoggedIn, user } = useUser();
@@ -38,15 +39,16 @@ export default function Header() {
   const logoColor = useColorModeValue("red.500", "red.200");
   const Icon = useColorModeValue(FaMoon, FaSun);
   const toast = useToast();
+  const queryClient = useQueryClient();
   const onLogOut = async () => {
-    // const data = await logOut();
-    // console.log(data);
     const toastId = toast({
       title: "Login out...",
       description: "Sad to see you go...",
       status: "loading",
       position: "bottom-right",
     });
+    const data = await logOut();
+    queryClient.refetchQueries(["me"]);
     setTimeout(() => {
       toast.update(toastId, {
         status: "success",
@@ -66,7 +68,7 @@ export default function Header() {
         md: "row",
       }}
       spacing={{
-        sm: 3,
+        sm: 4,
         md: 0,
       }}
       borderBottomWidth={1}
