@@ -58,16 +58,12 @@ export default function Header() {
           onClick={toggleColorMode}
           variant={"ghost"}
           aria-label="Toggle dark mode"
-          //colorMode === "light" ? <FaMoon /> : <FaSun />
           icon={<Icon />}
         />
         {!userLoading ? (
           !isLoggedIn ? (
-            // 화면이 늦게 나타나는데. 그건 useQuery가 페치를 여러번 시도하기 때문이다.
-            //<>를 사용하는 이유는 1개를 반환해야 하는데 2개를 반환해서
             <>
               <Button onClick={onLoginOpen}>Log in</Button>
-              {/* 라이트, 다크 모드에 영향 안받게 함.  */}
               <LightMode>
                 <Button onClick={onSignUpOpen} colorScheme={"red"}>
                   Sign up
@@ -75,7 +71,7 @@ export default function Header() {
               </LightMode>
             </>
           ) : (
-            <Avatar size={"md"} />
+            <Avatar name={user.name} src={user.avatar} size={"md"} />
           )
         ) : null}
       </HStack>
