@@ -19,8 +19,9 @@ import { FaStar } from "react-icons/fa";
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
+  console.log(roomPk);
   const { isLoading, data } = useQuery<IRoomDetail>([`rooms`, roomPk], getRoom);
-  const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<
+  const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
     IReview[]
   >([`rooms`, roomPk, `reviews`], getRoomReviews);
   return (

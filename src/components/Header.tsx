@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   HStack,
@@ -13,8 +14,10 @@ import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import useUser from "../lib/useUser";
 
 export default function Header() {
+  const { userLoading, isLoggedIn, user } = useUser();
   const {
     isOpen: isLoginOpen,
     onClose: onLoginClose,
@@ -55,16 +58,26 @@ export default function Header() {
           onClick={toggleColorMode}
           variant={"ghost"}
           aria-label="Toggle dark mode"
-          //   colorMode === "light" ? <FaMoon /> : <FaSun />
+          //colorMode === "light" ? <FaMoon /> : <FaSun />
           icon={<Icon />}
         />
-        <Button onClick={onLoginOpen}>Log in</Button>
-        {/* 라이트, 다크 모드에 영향 안받게 함.  */}
-        <LightMode>
-          <Button onClick={onSignUpOpen} colorScheme={"red"}>
-            Sign up
-          </Button>
-        </LightMode>
+        {!userLoading ? (
+          !isLoggedIn ? (
+            // 화면이 늦게 나타나는데. 그건 useQuery가 페치를 여러번 시도하기 때문이다.
+            //<>를 사용하는 이유는 1개를 반환해야 하는데 2개를 반환해서
+            <>
+              <Button onClick={onLoginOpen}>Log in</Button>
+              {/* 라이트, 다크 모드에 영향 안받게 함.  */}
+              <LightMode>
+                <Button onClick={onSignUpOpen} colorScheme={"red"}>
+                  Sign up
+                </Button>
+              </LightMode>
+            </>
+          ) : (
+            <Avatar size={"md"} />
+          )
+        ) : null}
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
