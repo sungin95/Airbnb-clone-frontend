@@ -47,15 +47,13 @@ export default function Header() {
       status: "loading",
       position: "bottom-right",
     });
-    const data = await logOut();
+    await logOut();
     queryClient.refetchQueries(["me"]);
-    setTimeout(() => {
-      toast.update(toastId, {
-        status: "success",
-        title: "Done!",
-        description: "See you later!",
-      });
-    }, 5000);
+    toast.update(toastId, {
+      status: "success",
+      title: "Done!",
+      description: "See you later!",
+    });
   };
   return (
     <Stack
