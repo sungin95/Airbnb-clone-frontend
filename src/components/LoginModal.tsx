@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -21,21 +23,22 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
+interface IForm {
+  username: string;
+  password: string;
+}
+
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
-  const [username, onChangeUsername] = useState("");
-  const [password, onChangePassword] = useState("");
-  const onChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    if (name === "username") {
-      onChangeUsername(value);
-    } else if (name === "password") {
-      onChangePassword(value);
-    }
+  // watch 관리할때
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>();
+  const onSubmit = (data: IForm) => {
+    console.log(data);
   };
-  const onSubmit = (event: React.SyntheticEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log(username, password);
-  };
+  console.log(errors);
   return (
     <Modal onClose={onClose} isOpen={isOpen}>
       {/* motionPreset="slideInBottom" */}
@@ -43,7 +46,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       <ModalContent>
         <ModalHeader>Log in </ModalHeader>
         <ModalCloseButton />
-        <ModalBody as={"form"} onSubmit={onSubmit as any}>
+        <ModalBody as={"form"} onSubmit={handleSubmit(onSubmit)}>
           <VStack>
             <InputGroup>
               <InputLeftElement
@@ -54,10 +57,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 }
               />
               <Input
+                isInvalid={Boolean(errors.password?.message)}
                 required
-                name="username"
-                onChange={onChange}
-                value={username}
+                {...register("username", {
+                  required: "아이디를 입력해 주세요",
+                })}
                 variant={"filled"}
                 placeholder="Username"
               />
@@ -71,11 +75,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 }
               />
               <Input
+                isInvalid={Boolean(errors.password?.message)}
                 required
-                name="password"
-                onChange={onChange}
-                value={password}
                 type="password"
+                {...register("password", {
+                  required: "Please write a password",
+                })}
                 variant={"filled"}
                 placeholder="password"
               />
