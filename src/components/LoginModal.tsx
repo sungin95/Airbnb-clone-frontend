@@ -23,7 +23,7 @@ import {
   IUsernameLoginError,
   IUsernameLoginSuccess,
   IUsernameLoginVariables,
-  unsernameLogIn,
+  usernameLogIn,
 } from "../routes/api";
 
 interface LoginModalProps {
@@ -42,28 +42,23 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IForm>();
   const toast = useToast();
   const queryClient = useQueryClient();
-  const mutation = useMutation<
-    IUsernameLoginSuccess,
-    IUsernameLoginError,
-    IUsernameLoginVariables
-  >(unsernameLogIn, {
-    onMutate: () => {
-      console.log("mutation starting");
-    },
+  const mutation = useMutation(usernameLogIn, {
     onSuccess: (data) => {
-      //   data.ok;
+      console.log(data);
       toast({
         title: "welcome back!",
         status: "success",
       });
       onClose();
+      reset();
       queryClient.refetchQueries(["me"]);
     },
+    // status를 통해 구분이 된다.
     onError: (error) => {
-      //   error.error;
       console.log("mutation has an error");
     },
   });
@@ -117,6 +112,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               />
             </InputGroup>
           </VStack>
+          {mutation.isError ? (
+            <Text color={"red.500"} textAlign={"center"} fontSize={"sm"}>
+              username or Password are wrong
+            </Text>
+          ) : null}
           <Button
             isLoading={mutation.isLoading}
             type="submit"

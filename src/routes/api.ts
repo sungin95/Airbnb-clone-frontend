@@ -70,7 +70,7 @@ export interface IUsernameLoginSuccess {
 export interface IUsernameLoginError {
   error: string;
 }
-export const unsernameLogIn = ({
+export const usernameLogIn = ({
   username,
   password,
 }: IUsernameLoginVariables) =>

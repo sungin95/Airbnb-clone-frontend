@@ -3,8 +3,9 @@ import { getMe } from "../routes/api";
 import { IUser } from "../types";
 
 export default function useUser() {
-  const { isLoading, data, isError } = useQuery(["me"], getMe, {
+  const { isLoading, data, isError } = useQuery<IUser>(["me"], getMe, {
     retry: false,
+    refetchOnWindowFocus: false,
   });
   return {
     userLoading: isLoading,
