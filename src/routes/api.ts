@@ -110,3 +110,6 @@ export const userSignUp = ({
       }
     )
     .then((response) => response.data);
+
+export const getAmenities = () =>
+  instance.get(`rooms/amenities`).then((response) => response.data);
