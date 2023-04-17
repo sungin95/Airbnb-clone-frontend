@@ -83,7 +83,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 }
               />
               <Input
-                isInvalid={Boolean(errors.password?.message)}
+                isInvalid={Boolean(errors.username?.message)}
                 required
                 {...register("username", {
                   required: "아이디를 입력해 주세요",
