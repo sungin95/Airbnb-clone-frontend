@@ -18,12 +18,11 @@ import {
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Value } from "react-calendar/dist/cjs/shared/types";
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
-  console.log(roomPk);
   const { isLoading, data } = useQuery<IRoomDetail>([`rooms`, roomPk], getRoom);
   const { isLoading: isReviewsLoading, data: reviewsData } = useQuery<
     IReview[]
@@ -33,7 +32,14 @@ export default function RoomDetail() {
   const handleDateChange = (value: any) => {
     setDates(value);
   };
-  console.log(dates);
+  useEffect(() => {
+    if (dates) {
+      const [firstDate, secondDate] = dates;
+      const [checkIn] = firstDate.toJSON().split("T");
+      const [checkOut] = secondDate.toJSON().split("T");
+      console.log(checkIn, checkOut);
+    }
+  }, [dates]);
 
   return (
     <Box
