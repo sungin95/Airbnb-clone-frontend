@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { checkBooking, getRoom, getRoomReviews } from "./api";
 import { IReview, IRoomDetail } from "../types";
 import {
@@ -15,6 +15,7 @@ import {
   Text,
   VStack,
   Button,
+  Toast,
 } from "@chakra-ui/react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -55,7 +56,11 @@ export default function RoomDetail() {
       <Helmet>
         <title>{data ? data.name : "Loading..."} </title>
       </Helmet>
-
+      {data?.is_owner ? (
+        <Link to={`/rooms/${roomPk}/update`}>
+          <Button colorScheme={"red"}>수정하기</Button>
+        </Link>
+      ) : null}
       <Skeleton height={"43px"} width={"25%"} isLoaded={!isLoading}>
         <Heading>{data?.name}</Heading>
       </Skeleton>
@@ -162,9 +167,11 @@ export default function RoomDetail() {
             maxDate={new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)}
             selectRange
           />
+          {/* disabled가 작동 안하는 문제로 로딩이랑 바꿈 */}
           <Button
-            disabled={!checkBookingData?.ok}
-            isLoading={isCheckingBooking && dates !== undefined}
+            type="submit"
+            isLoading={!checkBookingData?.ok}
+            disabled={isCheckingBooking && dates !== undefined}
             my={5}
             w="100%"
             colorScheme={"red"}

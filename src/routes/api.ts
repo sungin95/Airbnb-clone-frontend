@@ -233,3 +233,24 @@ export const checkBooking = ({
       .then((response) => response.data);
   }
 };
+
+// export const BookingRoomDetail = ({
+//   queryKey,
+// }: QueryFunctionContext<checkBookingQueryKey>) => {
+//   const [_, roomPK, dates] = queryKey;
+//   if (dates) {
+//     const [firstDate, secondDate] = dates;
+//     const checkIn = formatDate(firstDate);
+//     const checkOut = formatDate(secondDate);
+//     return instance
+//       .post(
+//         `rooms/${roomPK}/bookings?check_in=${checkIn}&check_out=${checkOut}`,
+//         {
+//           headers: {
+//             "X-CSRFToken": Cookie.get("csrftoken") || "",
+//           },
+//         }
+//       )
+//       .then((response) => response.data);
+//   }
+// };
